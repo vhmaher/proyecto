@@ -32,13 +32,12 @@ export default function Pregnant(props) {
                 body: JSON.stringify({
                     fecha_parto: fpp,
                     estab_salud: centroSAlud,
-                    id_encuestado: Eid,
+                    id_encuestado: Eid
                 })
 
             }).then((response) => response.json())
                 .then((responseJson) => {
                     navigation.navigate("formato4");
-
 
                 }).catch((error) => {
                     console.error(error);
@@ -98,7 +97,7 @@ const styles = StyleSheet.create({
     label: {
         fontWeight: 'bold',
         fontSize: 18,
-        marginTop: 20,
+        marginTop: 5,
         alignItems: 'center'
 
     },

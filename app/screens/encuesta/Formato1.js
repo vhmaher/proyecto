@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, ScrollView,Button } from 'react-native';
+import { View, Text, TextInput, StyleSheet, ScrollView,TouchableHighlight } from 'react-native';
 import { Picker } from "@react-native-picker/picker"
 export default function Formato1(props) {
 
@@ -196,11 +196,11 @@ export default function Formato1(props) {
                 </Picker>
                 <Text style={styles.label} >gRACIAS POR SU ATENCION</Text>
             </View>
-            <Button
-                title='GUARDAR ENCUESTA'
-                color="#D00E36"
-                onPress={() => component.Formato1}>
-            </Button>
+            <View>
+                <TouchableHighlight onPress={() => Formatos()} style={styles.btnGuardar}>
+                    <Text style={styles.textoGuardar}>GUARDAR</Text>
+                </TouchableHighlight>
+            </View>
         </ScrollView >
     );
 };

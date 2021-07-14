@@ -13,6 +13,7 @@ export default function UserLogged(props) {
   return (
     <View style={styles.MainContainer}>
       <View>
+      <Text style={styles.title}> BIENVENIDO </Text>
         <Image
           source={require("../../../assests/escudo-dorado.png")}
           resizeMode="contain"

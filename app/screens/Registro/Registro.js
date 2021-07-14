@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     label: {
         fontWeight: 'bold',
         fontSize: 18,
-        marginTop: 20,
+        marginTop: 5,
         alignItems: 'center'
 
     },
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     input: {
-        marginTop: 10,
+        marginTop: 5,
         height: 50,
         borderColor: '#e1e1e1',
         borderWidth: 1,

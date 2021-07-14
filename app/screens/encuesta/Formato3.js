@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, ScrollView, Button } from 'react-native';
+import { View, Text, TextInput, StyleSheet, ScrollView, BuTouchableHighlighttton } from 'react-native';
 import { Picker } from "@react-native-picker/picker"
 
 const Formato3 = () => {
@@ -227,11 +227,11 @@ const Formato3 = () => {
                 </Picker>
                 <Text style={styles.label} >GRACIAS POR SU ATENCION</Text>
             </View>
-            <Button
-                title='GUARDAR ENCUESTA'
-                color="#D00E36"
-                onPress={() => component.Formato1}>
-            </Button>
+            <View>
+                <TouchableHighlight onPress={() => Formatos()} style={styles.btnGuardar}>
+                    <Text style={styles.textoGuardar}>GUARDAR</Text>
+                </TouchableHighlight>
+            </View>
         </ScrollView>
     );
 };

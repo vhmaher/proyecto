@@ -17,21 +17,32 @@ export default function Child(props) {
     const { navigation, route } = props;
     const { Eid, Enombre } = route.params;
 
-    const [dniN, guardarNDNI] = useState('');
-    const [nombresN, guardarNNombres] = useState('');
-    const [apPaternoN, guardarNPaterno] = useState('');
-    const [apMaternoN, guardarNMaterno] = useState('');
+    const [dni, guardarNDNI] = useState('');
+    const [nombres, guardarNNombres] = useState('');
+    const [apPaterno, guardarNPaterno] = useState('');
+    const [apMaterno, guardarNMaterno] = useState('');
     const [nacimiento, guardarNacimiento] = useState(new Date());
     const [centroSAlud, guardarCentroSalud] = useState('');
     const [prematuro, guardarPrematuro] = useState('');
     const [categoria, guardarCategoria] = useState('');
 
-    const crearContacto = () => {
+
+    const mostrarAlerta = () => {
+        Alert.alert(
+            'Error',
+            'Todos los campos son obligatorios',
+            [{
+                text: 'ok'
+            }]
+        )
+    }
+
+    const Formatos = () => {
         if (dni.trim() === ''
-            || nombresN.trim() === ''
-            || apPaternoN.trim() === ''
+            || nombres.trim() === ''
+            || apPaterno.trim() === ''
             || centroSAlud.trim() === ''
-            || dniN.trim() === ''
+            || dni.trim() === ''
             || centroSAlud.trim() === ''
         ) {
             mostrarAlerta();
@@ -51,108 +62,56 @@ export default function Child(props) {
                     apMaterno: apMaterno,
                     dni: dni,
                     fecha_nacimiento: nacimiento,
-                    celular: telefono,
-                    direccion: direccion,
-                    ref_vivienda: refVivienda,
+                    estab_salud: centroSAlud,
+                    prematuro: prematuro,
                     categoria: categoria,
-                    id_promotor: '1',
+                    id_encuestado: Eid,
                 })
 
             }).then((response) => response.json())
                 .then((responseJson) => {
-                    navigation.navigate("Contactos");
-                    
+                    if (categoria == "Recien Nacido / Puerpera") {
+                        navigation.navigate("formato5", {
+                            Eid: Eid,
+                            Enombre: nombres
+                        });
+
+                    }
+                    if (categoria == "De 1 a menos de 6") {
+                        navigation.navigate("formato1", {
+                            Eid: Eid,
+                            Enombre: nombres
+                        });
+                    }
+                    if (categoria == "Recien Nacido / Puerpera") {
+                        navigation.navigate("formato5", {
+                            Eid: Eid,
+                            Enombre: nombres
+                        });
+                    }
+                    if (categoria == "De 6 a 11 meses") {
+                        navigation.navigate("formato2", {
+                            Eid: Eid,
+                            Enombre: nombres
+                        });
+                    }
+                    if (categoria == "Mas de 1  a 3 años") {
+                        navigation.navigate("formato3", {
+                            Eid: Eid,
+                            Enombre: nombres
+                        });
+                    }
 
                 }).catch((error) => {
                     console.error(error);
                 });
         }
-
     }
-    const mostrarAlerta = () => {
-        Alert.alert(
-            'Error',
-            'Todos los campos son obligatorios',
-            [{
-                text: 'ok'
-            }]
-        )
-    }
-
-        meses = 0;
-        edad = 0;
-        var d = new Date(),
-    
-            month = '' + (d.getMonth() + 1),
-            day = '' + d.getDate(),
-            year = d.getFullYear();
-        if (month.length < 2)
-            month = '0' + month;
-        if (day.length < 2)
-            day = '0' + day;
-        d = [year, month, day].join('-')
-    
-        var hoy = new Date(d);
-        var cumpleanos = new Date(nacimiento);
-        var edad = hoy.getFullYear() - cumpleanos.getFullYear();
-        var m = hoy.getMonth() - cumpleanos.getMonth();
-        if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
-            edad--;
-        }
-        var meses = 0;
-        if (hoy.getMonth() > cumpleanos.getMonth()) {
-            meses = hoy.getMonth() - cumpleanos.getMonth();
-        } else if (hoy.getMonth() < cumpleanos.getMonth()) {
-            meses = 12 - (cumpleanos.getMonth() - hoy.getMonth());
-        } else if (hoy.getMonth() == cumpleanos.getMonth() && hoy.getDate() > cumpleanos.getDate()) {
-            if (hoy.getMonth() - cumpleanos.getMonth() == 0) {
-                meses = 0;
-            } else {
-                meses = 11;
-            }
-    
-        }
-
-
-        const Formatos = () => {
-            if (edad == 0 && mes == 0) {
-                navigation.navigate("formato5", {
-                    Eid: id,
-                    Enombre: nombre
-                });
-    
-            }
-            if (meses < 6 && edad == 0) {
-                navigation.navigate("formato1", {
-                    Eid: id,
-                    Enombre: nombre
-                });
-            }
-            if (meses < 12 && meses >= 6 && edad == 0) {
-                navigation.navigate("formato2", {
-                    Eid: id,
-                    Enombre: nombre
-                });
-            }
-            if (edad >= 1 && meses <= 3) {
-                navigation.navigate("formato5", {
-                    Eid: id,
-                    Enombre: nombre
-                });
-            }
-            if (categoria === "gestante") {
-                navigation.navigate("formato4", {
-                    Eid: id,
-                    Enombre: nombre
-                });
-            }
-    
-        }
 
     return (
         <ScrollView>
             <View style={styles.formulario}>
-                <Text style={styles.titulo} > Datos de Niño</Text>
+                <Text style={styles.titulo} > Datos de Niño </Text>
                 <Text style={styles.label} > D.N.I. del Niño</Text>
                 <TextInput
                     style={styles.input}
@@ -197,8 +156,20 @@ export default function Child(props) {
                     mode={"dialog"}
                     onValueChange={(texto) => guardarPrematuro(texto)}
                 >
-                    <Picker.Item label="SI" value="si" />
-                    <Picker.Item label="NO" value="no" />
+                    <Picker.Item label="SI" value="1" />
+                    <Picker.Item label="NO" value="0" />
+                </Picker>
+                <Text style={styles.label} > Escoger formato</Text>
+                <Picker
+                    selectedValue={categoria}
+                    style={styles.input}
+                    mode={"dialog"}
+                    onValueChange={(texto) => guardarCategoria(texto)}
+                >
+                    <Picker.Item label="Recien Nacido / Puerpera" value="p" />
+                    <Picker.Item label="De 1 a menos de 6" value="s" />
+                    <Picker.Item label="De 6 a 11 meses" value="t" />
+                    <Picker.Item label="Mas de 1  a 3 años" value="c" />
                 </Picker>
             </View>
             <View>
@@ -214,13 +185,13 @@ const styles = StyleSheet.create({
     formulario: {
         backgroundColor: '#FFF',
         paddingHorizontal: 20,
-        paddingVertical: 10,
+        paddingVertical:5   ,
         marginHorizontal: '2.5%'
     },
     label: {
         fontWeight: 'bold',
         fontSize: 18,
-        marginTop: 20,
+        marginTop: 5,
         alignItems: 'center'
 
     },

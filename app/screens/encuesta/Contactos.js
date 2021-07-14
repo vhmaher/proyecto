@@ -8,21 +8,26 @@ import {
   View,
   FlatList,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  ActivityIndicator,
+  Image
 } from 'react-native';
 
 export default function Contactos(props) {
   const { navigation } = props;
+  const [isLoading, setIsLoading] = useState(false);
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
 
   useEffect(() => {
+    setIsLoading(true);
     fetch('http://192.168.3.62/conexion/question_list.php')
       .then((response) => response.json())
       .then((responseJson) => {
         setFilteredDataSource(responseJson);
         setMasterDataSource(responseJson);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error(error);
@@ -30,7 +35,6 @@ export default function Contactos(props) {
   }, []);
 
   const searchFilterFunction = (text) => {
-    // Check if searched text is not blank
     if (text) {
       const newData = masterDataSource.filter(
         function (item) {
@@ -50,20 +54,28 @@ export default function Contactos(props) {
 
   const ItemView = ({ item }) => {
     return (
-      // Flat List Item
-      <TouchableOpacity
-        onPress={() => navigation.navigate("persona", {
-          id: item.id,
-          nombre: item.nombre,
-          categoria: item.categoria,
-          celular: item.celular
-        })}>
-        <View style={styles.metaInfo}>
-          <Text style={styles.title}>{item.nombre}</Text>
-          <Text style={styles.title}>{item.apPaterno}</Text>
-          <Text style={styles.title}>{item.categoria}</Text>
-        </View>
-      </TouchableOpacity>
+      <View style={styles.Listas}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("persona", {
+            id: item.id,
+            nombre: item.nombre,
+            categoria: item.categoria,
+            celular: item.celular
+          })}>
+          <View>
+            <Image
+              source={require("../../../assests/user.png")}
+              resizeMode="contain"
+              style={styles.image}
+            />
+            <View >
+              <Text style={styles.title}>{item.nombre}</Text>
+              <Text style={styles.title}>{item.apPaterno}</Text>
+              <Text style={styles.title}>{item.categoria}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      </View>
     );
   };
 
@@ -72,14 +84,20 @@ export default function Contactos(props) {
       // Flat List Item Separator
       <View
         style={{
-          height: 0.5,
+          height: 1,
           width: '100%',
-          backgroundColor: '#C8C8C8',
+          backgroundColor: '#2C0251',
         }}
       />
     );
   };
-
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#5500dc" />
+      </View>
+    );
+  }
   const getItem = (item) => {
     // Function for click on an item
     alert('Id : ' + item.id + ' Title : ' + item.title);
@@ -96,6 +114,7 @@ export default function Contactos(props) {
           placeholder="Buscar aqui"
         />
         <FlatList
+          style={styles.container}
           data={filteredDataSource}
           keyExtractor={(item, index) => index.toString()}
           ItemSeparatorComponent={ItemSeparatorView}
@@ -107,20 +126,44 @@ export default function Contactos(props) {
 };
 
 const styles = StyleSheet.create({
+
   container: {
-    backgroundColor: 'white',
+    backgroundColor: '#F5ECE2',
   },
-  itemStyle: {
+  Listas: {
+    backgroundColor: '#DC7B08',
+    marginHorizontal: 10,
+    marginVertical: 10,
+    borderWidth: 1,
     padding: 10,
+    borderRadius: 20
   },
   textInputStyle: {
-    height: 40,
+    height: 60,
     borderWidth: 1,
-    paddingLeft: 20,
+    paddingLeft: 132,
     margin: 5,
+    borderRadius: 30,
+    borderColor: '#7688',
+    backgroundColor: '#FFFFFF',
+  },
+  title: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    marginBottom: 5 ,
+    paddingLeft: 50,
+    margin: 4,
+    borderRadius: 20,
     borderColor: '#009688',
     backgroundColor: '#FFFFFF',
   },
+  image: {
+    alignItems: 'center',
+    height: 60,
+    width: "20%",
+    marginBottom: 5,
+
+},
 });
 
 

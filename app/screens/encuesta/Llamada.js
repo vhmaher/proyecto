@@ -8,7 +8,7 @@ import {
     TouchableOpacity,
     Alert,
     Linking,
-    FlatList
+    Image
 } from 'react-native';
 
 import CallLogs from 'react-native-call-log';
@@ -69,24 +69,42 @@ export default function Llamada(props) {
         )
     }
 
+    const [value, onChangeText] = React.useState('Useless Multiline Placeholder');
+
     return (
         <ScrollView>
-            <View>
-                <Text style={styles.label} > Llamar</Text>
-                <View  style={styles.container}>
-                    <TouchableOpacity onPress={() => realizarLlamada()} style={styles.btnLlamar}>
-                        <Text style={styles.textoGuardar}>{Ecelular}</Text>
+            <View style={styles.container}>
+                <Text style={styles.label} > REALIZAR LLAMADA</Text>
+                
+                <Image
+              source={require("../../../assests/user.png")}
+              resizeMode="contain"
+              style={styles.image2}
+            />
+                <View  >
 
+                    <TouchableOpacity onPress={() => realizarLlamada()} style={styles.button}>
+                        <Text style={styles.textoGuardar}>Lamar : {Ecelular}</Text>
+                        <Image
+                            source={require("../../../assests/telefono.png")}
+                            resizeMode="contain"
+                            style={styles.image}
+                        />
+                    </TouchableOpacity>
+                    <Text style={styles.label} > OBSERVACION</Text>
+                    <TextInput
+                        multiline
+                        style={styles.input}
+                        value={observacion}
+                        numberOfLines={4}
+                        onChangeText={text => guardarObserbacion(text)}
+                        placeholder="Ingrese sus observaciones"
+                    />
+                    <TouchableOpacity onPress={() => crearLlamada()} style={styles.btnGuardar}>
+                        <Text style={styles.textoGuardar}>GUARDAR</Text>
                     </TouchableOpacity>
                 </View>
-                <Text style={styles.label} > OBSERVACION</Text>
-                <TextInput
-                    style={styles.input}
-                    onChangeText={texto => guardarObserbacion(texto)}
-                />
-                <TouchableOpacity onPress={() => crearLlamada()} style={styles.btnGuardar}>
-                    <Text style={styles.textoGuardar}>GUARDAR</Text>
-                </TouchableOpacity>
+
             </View>
         </ScrollView>
     );
@@ -95,9 +113,22 @@ export default function Llamada(props) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
         alignItems: 'center',
-        
+        marginTop: 50,
+    },
+    image2: {
+        alignItems: 'center',
+        height: 60,
+        width: "20%",
+        marginBottom: 5,
+    
+    },
+    image: {
+        alignItems: 'center',
+        height: 45,
+        width: "35%",
+        marginBottom: 5,
+
     },
     formulario: {
         backgroundColor: '#FFF',
@@ -113,11 +144,14 @@ const styles = StyleSheet.create({
 
     },
     input: {
-        marginTop: 10,
-        height: 50,
-        borderColor: '#e1e1e1',
+        marginHorizontal: '2.5%',
+        height: 80,
         borderWidth: 1,
-        borderStyle: 'solid'
+        paddingLeft: 20,
+        margin: 5,
+        borderRadius: 5,
+        borderColor: '#7688',
+        backgroundColor: '#FFFFFF',
     },
     titulo: {
         color: '#17202A',
@@ -127,15 +161,25 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     btnGuardar: {
-        padding: 20,
-        backgroundColor: '#D00E36'
-    },
-    btnLlamar: {
+        alignItems: 'center',
+        backgroundColor: '#FF3A00',
         borderWidth: 1,
-        padding: 20,
-        borderColor: 'black',
+        borderColor: '#7688',
+        padding: 10,
+        width: 300,
+        marginTop: 16,
+        borderRadius: 20
+    },
+
+    button: {
+        alignItems: 'center',
         backgroundColor: '#47D845',
-        borderRadius: 50
+        borderWidth: 1,
+        borderColor: '#7688',
+        padding: 10,
+        width: 300,
+        marginTop: 16,
+        borderRadius: 20
     },
     textoGuardar: {
         color: '#FFF',

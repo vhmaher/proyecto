@@ -6,18 +6,20 @@ import {
   Alert,
   Image,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 
 export default function Login(props) {
 
-const {navigation}=props;
+  const { navigation } = props;
+  const [isLoading, setIsLoading] = useState(false);
   const [User, setUser] = useState('');
   const [UserPassword, setUserPassword] = useState('');
 
 
   const UserLoginFunction = () => {
-
+    setIsLoading(true);
     fetch('http://192.168.3.62/conexion/User_Login.php', {
       method: 'POST',
       headers: {
@@ -35,11 +37,12 @@ const {navigation}=props;
         // Si hay comunicacion con el servidor
         if (responseJson === 'Datos Correctos') {
           navigation.navigate('usersession');
+
         }
         else {
           Alert.alert(responseJson);
         }
-
+        setIsLoading(false);
       }).catch((error) => {
         console.error(error);
       });
@@ -48,7 +51,13 @@ const {navigation}=props;
   const UserRegister = () => {
     navigation.navigate('account');
   }
-
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#5500dc" />
+      </View>
+    );
+  }
   return (
 
     <View style={styles.MainContainer}>
