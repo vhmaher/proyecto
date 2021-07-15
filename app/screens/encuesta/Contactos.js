@@ -10,7 +10,6 @@ import {
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
-  Image
 } from 'react-native';
 
 export default function Contactos(props) {
@@ -22,7 +21,7 @@ export default function Contactos(props) {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch('http://192.168.3.62/conexion/question_list.php')
+    fetch('http://192.168.1.20/conexion/question_list.php')
       .then((response) => response.json())
       .then((responseJson) => {
         setFilteredDataSource(responseJson);
@@ -33,7 +32,19 @@ export default function Contactos(props) {
         console.error(error);
       });
   }, []);
-
+  const actualizar = () => {
+    setIsLoading(true);
+    fetch('http://192.168.1.20/conexion/question_list.php')
+      .then((response) => response.json())
+      .then((responseJson) => {
+        setFilteredDataSource(responseJson);
+        setMasterDataSource(responseJson);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   const searchFilterFunction = (text) => {
     if (text) {
       const newData = masterDataSource.filter(
@@ -56,18 +67,13 @@ export default function Contactos(props) {
     return (
       <View style={styles.Listas}>
         <TouchableOpacity
-          onPress={() => navigation.navigate("persona", {
+          onPress={() => navigation.navigate("lista", {
             id: item.id,
             nombre: item.nombre,
             categoria: item.categoria,
             celular: item.celular
           })}>
           <View>
-            <Image
-              source={require("../../../assests/user.png")}
-              resizeMode="contain"
-              style={styles.image}
-            />
             <View >
               <Text style={styles.title}>{item.nombre}</Text>
               <Text style={styles.title}>{item.apPaterno}</Text>
@@ -113,6 +119,13 @@ export default function Contactos(props) {
           underlineColorAndroid="transparent"
           placeholder="Buscar aqui"
         />
+        <TouchableOpacity
+          onPress={() => actualizar()}
+          style={styles.button}>
+          <View style={styles.metaInfo}>
+            <Text >Actualizar </Text>
+          </View>
+        </TouchableOpacity>
         <FlatList
           style={styles.container}
           data={filteredDataSource}
@@ -121,7 +134,7 @@ export default function Contactos(props) {
           renderItem={ItemView}
         />
       </View>
-    </SafeAreaView>
+    </SafeAreaView >
   );
 };
 
@@ -129,6 +142,13 @@ const styles = StyleSheet.create({
 
   container: {
     backgroundColor: '#F5ECE2',
+  },
+  button: {
+    alignItems: 'center',
+
+    borderWidth: 1,
+
+    borderRadius: 20
   },
   Listas: {
     backgroundColor: '#DC7B08',
@@ -150,7 +170,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 15,
     fontWeight: 'bold',
-    marginBottom: 5 ,
+    marginBottom: 5,
     paddingLeft: 50,
     margin: 4,
     borderRadius: 20,
@@ -163,7 +183,7 @@ const styles = StyleSheet.create({
     width: "20%",
     marginBottom: 5,
 
-},
+  },
 });
 
 

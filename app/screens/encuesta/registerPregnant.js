@@ -13,17 +13,17 @@ import DatePicker from 'react-native-date-picker';
 export default function Pregnant(props) {
 
     const { navigation, route } = props;
-    const { Eid, Enombre } = route.params;
+    const { EidN, Enombre } = route.params;
     const [fpp, guardarFPP] = useState(new Date());
-    const [centroSAlud, guardarCentroSalud] = useState('');
+    const [centroSalud, guardarCentroSalud] = useState('');
 
     const crearContacto = () => {
-        if (centroSAlud.trim() === '') {
+        if (centroSalud.trim() === '') {
             mostrarAlerta();
             return;
         }
         else {
-            fetch('http://192.168.3.62/conexion/register_pregnant.php', {
+            fetch('http://192.168.1.10/conexion/register_pregnant.php', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -31,8 +31,8 @@ export default function Pregnant(props) {
                 },
                 body: JSON.stringify({
                     fecha_parto: fpp,
-                    estab_salud: centroSAlud,
-                    id_encuestado: Eid
+                    estab_salud: centroSalud,
+                    id_encuestado: EidN
                 })
 
             }).then((response) => response.json())
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        
+
     },
     formulario: {
         backgroundColor: '#FFF',

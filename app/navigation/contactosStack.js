@@ -11,6 +11,7 @@ import Formato5 from "../screens/encuesta/Formato5";
 import Child from "../screens/encuesta/registerChild";
 import Pregnant from "../screens/encuesta/registerPregnant";
 import Llamada from "../screens/encuesta/Llamada";
+import Listas from "../screens/encuesta/listagestaInfa";
 const Stack = createStackNavigator();
 export default function contactosStack() {
     return (
@@ -20,7 +21,7 @@ export default function contactosStack() {
                 component={Contactos}
                 options={{ title: "Contactos" }}
             />
-                        <Stack.Screen
+            <Stack.Screen
                 name="persona"
                 component={Encuestado}
             />
@@ -63,6 +64,10 @@ export default function contactosStack() {
                 name="llamada"
                 component={Llamada}
                 options={{ title: "Llamada" }}
+            />
+            <Stack.Screen
+                name="lista"
+                component={Listas}
             />
         </Stack.Navigator>
     )

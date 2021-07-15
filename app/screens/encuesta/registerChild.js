@@ -7,7 +7,9 @@ import {
     StyleSheet,
     ScrollView,
     TouchableHighlight,
-    Alert
+    Alert,
+    FlatList,
+    TouchableOpacity
 } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 import { Picker } from "@react-native-picker/picker";
@@ -22,9 +24,14 @@ export default function Child(props) {
     const [apPaterno, guardarNPaterno] = useState('');
     const [apMaterno, guardarNMaterno] = useState('');
     const [nacimiento, guardarNacimiento] = useState(new Date());
+    const [sexo, guardarSexo] = useState('');
     const [centroSAlud, guardarCentroSalud] = useState('');
     const [prematuro, guardarPrematuro] = useState('');
     const [categoria, guardarCategoria] = useState('');
+
+
+  
+
 
 
     const mostrarAlerta = () => {
@@ -49,19 +56,19 @@ export default function Child(props) {
             return;
         }
         else {
-            fetch('http://192.168.3.62/conexion/register_child.php', {
+            fetch('http://192.168.1.20/conexion/register_child.php', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-
                     nombre: nombres,
                     apPaterno: apPaterno,
                     apMaterno: apMaterno,
                     dni: dni,
                     fecha_nacimiento: nacimiento,
+                    sexo:sexo,
                     estab_salud: centroSAlud,
                     prematuro: prematuro,
                     categoria: categoria,
@@ -70,46 +77,18 @@ export default function Child(props) {
 
             }).then((response) => response.json())
                 .then((responseJson) => {
-                    if (categoria == "Recien Nacido / Puerpera") {
-                        navigation.navigate("formato5", {
-                            Eid: Eid,
-                            Enombre: nombres
-                        });
-
-                    }
-                    if (categoria == "De 1 a menos de 6") {
-                        navigation.navigate("formato1", {
-                            Eid: Eid,
-                            Enombre: nombres
-                        });
-                    }
-                    if (categoria == "Recien Nacido / Puerpera") {
-                        navigation.navigate("formato5", {
-                            Eid: Eid,
-                            Enombre: nombres
-                        });
-                    }
-                    if (categoria == "De 6 a 11 meses") {
-                        navigation.navigate("formato2", {
-                            Eid: Eid,
-                            Enombre: nombres
-                        });
-                    }
-                    if (categoria == "Mas de 1  a 3 años") {
-                        navigation.navigate("formato3", {
-                            Eid: Eid,
-                            Enombre: nombres
-                        });
-                    }
-
+                    
+                    navigation .navigate("contactos");
                 }).catch((error) => {
                     console.error(error);
                 });
         }
     }
 
+    
     return (
         <ScrollView>
+      
             <View style={styles.formulario}>
                 <Text style={styles.titulo} > Datos de Niño </Text>
                 <Text style={styles.label} > D.N.I. del Niño</Text>
@@ -144,6 +123,16 @@ export default function Child(props) {
                         locale={'es'}
                     />
                 </View>
+                <Text style={styles.label} >Sexo</Text>
+                <Picker
+                    selectedValue={sexo}
+                    style={styles.input}
+                    mode={"dialog"}
+                    onValueChange={(texto) => guardarSexo(texto)}
+                >
+                    <Picker.Item label="VARON" value="1" />
+                    <Picker.Item label="MUJER" value="0" />
+                </Picker>
                 <Text style={styles.label} > Establecimiento de Salud</Text>
                 <TextInput
                     style={styles.input}
@@ -185,7 +174,7 @@ const styles = StyleSheet.create({
     formulario: {
         backgroundColor: '#FFF',
         paddingHorizontal: 20,
-        paddingVertical:5   ,
+        paddingVertical: 5,
         marginHorizontal: '2.5%'
     },
     label: {

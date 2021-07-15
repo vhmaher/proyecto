@@ -36,7 +36,7 @@ export default function register(props) {
             return;
         }
         else {
-            fetch('http://192.168.3.62/conexion/register_all.php', {
+            fetch('http://192.168.1.10/conexion/register_all.php', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

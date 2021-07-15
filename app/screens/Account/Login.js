@@ -20,7 +20,7 @@ export default function Login(props) {
 
   const UserLoginFunction = () => {
     setIsLoading(true);
-    fetch('http://192.168.3.62/conexion/User_Login.php', {
+    fetch('http://192.168.1.20/conexion/User_Login.php', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -45,7 +45,7 @@ export default function Login(props) {
         setIsLoading(false);
       }).catch((error) => {
         console.error(error);
-      });
+      })
   }
 
   const UserRegister = () => {

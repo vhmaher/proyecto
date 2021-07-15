@@ -34,7 +34,7 @@ export default function Encuestado(props) {
     }
     const Completar = () => {
 
-        if (categoria === "gestante" || categoria === "GESTANTE") {
+        if (categoria === "gestante" || categoria === "GESTANTE" || categoria === "Gestante") {
             navigation.navigate("pregnant", {
                 Eid: id,
                 Enombre: nombre
@@ -69,7 +69,6 @@ export default function Encuestado(props) {
                             style={styles.image}
                         />
                         <Text style={styles.title}>Completar Datos de {categoria}</Text>
-
                     </View>
                 </TouchableOpacity>
             </View>
@@ -82,20 +81,7 @@ export default function Encuestado(props) {
                         resizeMode="contain"
                         style={styles.image}
                     />
-                    <Text style={styles.title}>Encuesta Visita </Text>
-                </View>
-
-            </TouchableOpacity>
-            <TouchableOpacity
-                onPress={() => Llamada()}
-                style={styles.button}>
-                <View style={styles.metaInfo}>
-                    <Image
-                        source={require("../../../assests/telefono.png")}
-                        resizeMode="contain"
-                        style={styles.image}
-                    />
-                    <Text style={styles.title}>Primera llamada </Text>
+                    <Text style={styles.title}>Encuesta Visita 1</Text>
                 </View>
             </TouchableOpacity>
             <TouchableOpacity
@@ -107,7 +93,19 @@ export default function Encuestado(props) {
                         resizeMode="contain"
                         style={styles.image}
                     />
-                    <Text style={styles.title}>Segunda llamada </Text>
+                    <Text style={styles.title}>Encuesta Visita 2</Text>
+                </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => Llamada()}
+                style={styles.button}>
+                <View style={styles.metaInfo}>
+                    <Image
+                        source={require("../../../assests/telefono.png")}
+                        resizeMode="contain"
+                        style={styles.image}
+                    />
+                    <Text style={styles.title}>Encuesta Visita 3</Text>
                 </View>
             </TouchableOpacity>
         </View>
@@ -153,7 +151,6 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     item: {
-
         flexDirection: 'row'
     },
     title: {
@@ -169,7 +166,7 @@ const styles = StyleSheet.create({
         padding: 10,
         width: 300,
         marginTop: 16,
-        borderRadius:20
+        borderRadius: 20
     },
     btnText: {
         color: "white",

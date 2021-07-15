@@ -229,6 +229,14 @@ const styles = StyleSheet.create({
     },
     switchstyle: {
 
+    },
+    btnGuardar: {
+        padding: 20,
+        backgroundColor: '#D00E36'
+    },
+    textoGuardar: {
+        color: '#FFF',
+        fontWeight: 'bold',
+        textAlign: 'center'
     }
-
 })

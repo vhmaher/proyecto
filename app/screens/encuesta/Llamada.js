@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState ,Picker} from 'react';
 import {
     View,
     Text,
@@ -34,7 +34,7 @@ export default function Llamada(props) {
             return;
         }
         else {
-            fetch('http://192.168.3.62/conexion/register_call.php', {
+            fetch('http://192.168.1.10/conexion/register_call.php', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -75,12 +75,12 @@ export default function Llamada(props) {
         <ScrollView>
             <View style={styles.container}>
                 <Text style={styles.label} > REALIZAR LLAMADA</Text>
-                
+
                 <Image
-              source={require("../../../assests/user.png")}
-              resizeMode="contain"
-              style={styles.image2}
-            />
+                    source={require("../../../assests/user.png")}
+                    resizeMode="contain"
+                    style={styles.image2}
+                />
                 <View  >
 
                     <TouchableOpacity onPress={() => realizarLlamada()} style={styles.button}>
@@ -91,6 +91,25 @@ export default function Llamada(props) {
                             style={styles.image}
                         />
                     </TouchableOpacity>
+                    <Text style={styles.label} ></Text>
+                    <Picker
+                        selectedValue={p14}
+                        style={styles.input}
+                        mode={"dialog"}
+                        onValueChange={(itemValue) => setp14(itemValue)}
+                    >
+                        <Picker.Item label="SI" value="si" />
+                        <Picker.Item label="NO" value="no" />
+                    </Picker>
+                    <Text style={styles.label} > SUGERENCIA</Text>
+                    <TextInput
+                        multiline
+                        style={styles.input}
+                        value={observacion}
+                        numberOfLines={4}
+                        onChangeText={text => guardarObserbacion(text)}
+                        placeholder="Ingrese sus observaciones"
+                    />
                     <Text style={styles.label} > OBSERVACION</Text>
                     <TextInput
                         multiline
@@ -121,7 +140,7 @@ const styles = StyleSheet.create({
         height: 60,
         width: "20%",
         marginBottom: 5,
-    
+
     },
     image: {
         alignItems: 'center',

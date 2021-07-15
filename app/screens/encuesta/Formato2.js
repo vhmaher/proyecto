@@ -261,6 +261,15 @@ const styles = StyleSheet.create({
         borderColor: '#e1e1e1',
         borderWidth: 1,
         borderStyle: 'solid'
+    },
+    btnGuardar: {
+        padding: 20,
+        backgroundColor: '#D00E36'
+    },
+    textoGuardar: {
+        color: '#FFF',
+        fontWeight: 'bold',
+        textAlign: 'center'
     }
 })
 export default Formato2;
